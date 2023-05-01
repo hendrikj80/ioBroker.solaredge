@@ -177,8 +177,6 @@ function main() {
                     }
                 } else {
                     adapter.log.warn(error);
-                    adapter.log.info("Done, stopping...");
-                    adapter.stop();
                 }
             });
 
@@ -356,11 +354,16 @@ function main() {
                         }
                     } else {
                         adapter.log.warn(error);
-                        adapter.log.info("Done, stopping...");
-                        adapter.stop();
                     }
                 });
+
+                adapter.log.info("SolarEdge Fully Done, stopping...");
+                adapter.stop();
     }
+    } else {
+
+        dapter.log.info("SolarEdge nur von 6 bis 22 uhr aktiv");
+                adapter.stop();
     } //End for Loop 6 to 22 uhr
 }
 
