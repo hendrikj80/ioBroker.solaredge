@@ -76,7 +76,7 @@
         "readme": "https://github.com/92lleo/ioBroker.solaredge/blob/master/README.md",
         "loglevel": "info",
         "mode": "schedule",
-        "schedule": "*/15 * * * *",
+        "schedule": "*/8 * * * *",
         "type": "energy",
         "compact": true,
         "materialize": true,

@@ -250,7 +250,8 @@ function main() {
                                     }
                                 });
     
-                                adapter.createState('', siteid, 'gridIn', {
+
+                               adapter.createState('', siteid, 'gridIn', {
                                     name: "gridIn",
                                     def: gridIn,
                                     type: 'number',
@@ -361,9 +362,15 @@ function main() {
                 adapter.stop();
     }
     } else {
-
-        dapter.log.info("SolarEdge nur von 6 bis 22 uhr aktiv");
-                adapter.stop();
+        if (createStates) {
+        } else {
+                // get current timestamp
+                var now = new Date();
+                var nowTS = now.getTime();
+                await adapter.setStateChangedAsync(siteid + '.lastUpdateTime', nowTS, true);
+        }
+        adapter.log.info("SolarEdge nur von 6 bis 22 uhr aktiv");
+        adapter.stop();
     } //End for Loop 6 to 22 uhr
 }
 
