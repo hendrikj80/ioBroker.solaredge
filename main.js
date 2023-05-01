@@ -87,6 +87,9 @@ function Main() {
         // getting more info from PowerFlow
         var resource = "currentPowerFlow";
         var url = "https://monitoringapi.solaredge.com/site/" + siteid + "/" + resource + ".json?api_key=" + apikey;
+
+        checkStatesCreationNeeded();
+        
         request({
                     url: url,
                     json: true
