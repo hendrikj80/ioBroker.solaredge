@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "solaredge",
-        "version": "0.2.1",
+        "version": "0.3.1",
         "news": {
+            "0.3.1": {
+                "en": "hendrikj - Add PowerFlow"
+            },
             "0.3.0": {
                 "en": "Address review feedback from adapter review (see #19)"
             },

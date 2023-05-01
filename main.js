@@ -64,6 +64,13 @@ function checkStatesCreationNeeded(){
 
 function main() {
 
+    //If Function which only runs between 6am and 10pm
+    var d = new Date();
+    var n = d.getHours();
+    if (n >= 6 && n <= 22) {
+    
+
+    //SolarEdge Code Starts here
     siteid = adapter.config.siteid;
     var apikey = adapter.config.apikey;
 
@@ -163,17 +170,19 @@ function main() {
                         await adapter.setStateChangedAsync(siteid + '.lastYearData', overview.lastYearData.energy, true);
                         await adapter.setStateChangedAsync(siteid + '.lastMonthData', overview.lastMonthData.energy, true);
                         await adapter.setStateChangedAsync(siteid + '.lastDayData', overview.lastDayData.energy, true);
+                        
+                        adapter.log.info("SolarEdge Update - Basic");
                     } else {
                         adapter.log.warn('Response has no valid content. Check your data and try again. ' + response.statusCode);
                     }
                 } else {
                     adapter.log.warn(error);
+                    adapter.log.info("Done, stopping...");
+                    adapter.stop();
                 }
-
-                                /////// powerflow start
-
             });
 
+            // powerflow start
             // getting more info from PowerFlow
             var resource = "currentPowerFlow";
             var url = "https://monitoringapi.solaredge.com/site/" + siteid + "/" + resource + ".json?api_key=" + apikey;
@@ -184,6 +193,8 @@ function main() {
                 function (error, response, content) {
                     if (!error && response.statusCode == 200) {
                         if (content) {
+                            dapter.log.info('SolarEdge Update - PowerFlow start');
+
                             if(content.siteCurrentPowerFlow && !content.siteCurrentPowerFlow.length===0) {
                                 var callback = function (val) {};
                                 var powerflow = content.siteCurrentPowerFlow;
@@ -335,6 +346,8 @@ function main() {
                                         unit: "%"
                                     }, callback);
                                 }
+
+                                adapter.log.info('SolarEdge Update - PowerFlow');
                             } else {
                                 adapter.log.info('Response for site '+siteid+' has no ressource siteCurrentPowerFlow, ignoring');
                             }
@@ -343,16 +356,12 @@ function main() {
                         }
                     } else {
                         adapter.log.warn(error);
+                        adapter.log.info("Done, stopping...");
+                        adapter.stop();
                     }
                 });
-    
-            /////// powerflow end
-
-                adapter.log.info("Done, stopping...");
-                adapter.stop();
-            });
     }
-
+    } //End for Loop 6 to 22 uhr
 }
 
 // @ts-ignore parent is a valid property on module
