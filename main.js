@@ -94,7 +94,7 @@ function Main() {
                     url: url,
                     json: true
                 },
-                function (error, response, content) {
+                async function (error, response, content) {
                     if (!error && response.statusCode == 200) {
                         if (content) {
 
