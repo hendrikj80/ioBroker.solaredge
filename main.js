@@ -64,12 +64,6 @@ function checkStatesCreationNeeded(){
 
 function main() {
 
-    //If Function which only runs between 6am and 10pm
-    var d = new Date();
-    var n = d.getHours();
-    if (n >= 6 && n <= 22) {
-    
-
     //SolarEdge Code Starts here
     siteid = adapter.config.siteid;
     var apikey = adapter.config.apikey;
@@ -361,17 +355,6 @@ function main() {
                 adapter.log.info("SolarEdge Fully Done, stopping...");
                 adapter.stop();
     }
-    } else {
-        if (createStates) {
-        } else {
-                // get current timestamp
-                var now = new Date();
-                var nowTS = now.getTime();
-                await adapter.setStateChangedAsync(siteid + '.lastUpdateTime', nowTS, true);
-        }
-        adapter.log.info("SolarEdge nur von 6 bis 22 uhr aktiv");
-        adapter.stop();
-    } //End for Loop 6 to 22 uhr
 }
 
 // @ts-ignore parent is a valid property on module
