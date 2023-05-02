@@ -1,3 +1,6 @@
+//@ts-check
+// Description: This file is used to test the main.js file
+
 "use strict";
 
 /**

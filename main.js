@@ -1,3 +1,4 @@
+//@ts-check
 "use strict";
 
 /*
@@ -71,7 +72,7 @@ function checkStatesCreationNeeded(){
     checkStateCreationNeeded('gridAbs');
 }
 
-function Main() {
+function main() {
     //SolarEdge Code Starts here
     siteid = adapter.config.siteid;
     var apikey = adapter.config.apikey;
