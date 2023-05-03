@@ -71,10 +71,7 @@ function checkStatesCreationNeeded(){
     checkStateCreationNeeded('gridOut');
     checkStateCreationNeeded('gridAbs');
 }
-function main() {
-    //catch exceptions and output them
-
-    
+function main() {  
     //SolarEdge Code Starts here
     siteid = adapter.config.siteid;
     var apikey = adapter.config.apikey;
@@ -267,19 +264,19 @@ function main() {
                                     await adapter.setStateChangedAsync(siteid + '.storageAbs', storageAbs, true);
                                 }
 
+                                // wait for all await to finish before stopping the adapter
+                                await adapter.stopAsync();
+
                         } else {
                             adapter.log.warn('Response has no valid content. Check your data and try again. ' + response.statusCode);
+                            adapter.stop();
                         }
                     } else {
                         adapter.log.warn(error);
+                        adapter.stop();
                     }
                 });
     } // Ende Else
-
-    //Adapter stopen
-    adapter.log.info("SolarEdge Adapter Ende, stopping...");
-    adapter.stop();
-
 } // Ende  Main Function
 
 // @ts-ignore parent is a valid property on module
