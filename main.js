@@ -120,6 +120,7 @@ function main() {
                                 var connections = powerflow.connections;
                                 var con = Object.keys(connections[0]);
                                 con.forEach(function (junction) {
+                                    adapter.log.info(junction["from"].toString() + " -> " + junction["to"].toString());
                                     switch (junction["from"]) {
                                         case "STORAGE":
                                             // only LOAD is a valid target
@@ -133,7 +134,7 @@ function main() {
                                             break;
                                         case "PV":
                                             switch (junction["to"]) {
-                                                case "LOAD":
+                                                case "Load":
                                                     // nothing to handle: LOADs currentPower already available through dedicated value
                                                     break;
                                                 case "STORAGE":
@@ -144,7 +145,7 @@ function main() {
                                                     adapter.log.warn('Unknown target: ' + junction["to"] + ' for source: ' + junction["from"] + '.');
                                             }
                                             break;
-                                        case "LOAD":
+                                        case "Load":
                                             switch (junction["to"]) {
                                                 case "GRID":
                                                     gridOut = powerflow.GRID.currentPower;
