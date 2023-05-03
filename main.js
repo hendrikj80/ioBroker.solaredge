@@ -71,7 +71,6 @@ function checkStatesCreationNeeded(){
     checkStateCreationNeeded('gridOut');
     checkStateCreationNeeded('gridAbs');
 }
-
 function main() {
     //SolarEdge Code Starts here
     siteid = adapter.config.siteid;
@@ -99,7 +98,7 @@ function main() {
                     if (!error && response.statusCode == 200) {
                         if (content) {
 
-                            if(content.siteCurrentPowerFlow && !content.siteCurrentPowerFlow.length===0) {
+                            if(content.siteCurrentPowerFlow.length>0) {
                                 var callback = function (val) {};
                                 var powerflow = content.siteCurrentPowerFlow;
                                 var load = powerflow.LOAD.currentPower;
