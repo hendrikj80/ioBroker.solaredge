@@ -72,19 +72,21 @@ function checkStatesCreationNeeded(){
     checkStateCreationNeeded('gridAbs');
 }
 function main() {
+    //catch exceptions and output them
+
+    
     //SolarEdge Code Starts here
     siteid = adapter.config.siteid;
     var apikey = adapter.config.apikey;
 
-    //adapter.log.info("site id: " + siteid);
-    //adapter.log.info("api key: " + (apikey ? (apikey.substring(0, 4) + "...") : "not set"));
+    adapter.log.info("site id: " + siteid);
+    adapter.log.info("api key: " + (apikey ? (apikey.substring(0, 4) + "...") : "not set"));
 
     // adapter only works with siteid and api key set
     if ((!siteid) || (!apikey)) {
         adapter.log.error("siteid or api key not set")
     } else {
         // powerflow start
-        // getting more info from PowerFlow
         var resource = "currentPowerFlow";
         var url = "https://monitoringapi.solaredge.com/site/" + siteid + "/" + resource + ".json?api_key=" + apikey;
 
@@ -97,9 +99,8 @@ function main() {
                 async function (error, response, content) {
                     if (!error && response.statusCode == 200) {
                         if (content) {
-
-                            if(content.siteCurrentPowerFlow.length>0) {
-                                var callback = function (val) {};
+                                adapter.log.info("PowerFlow data received");
+                                //var callback = function (val) {};
                                 var powerflow = content.siteCurrentPowerFlow;
                                 var load = powerflow.LOAD.currentPower;
                                 var pv = powerflow.PV.currentPower;
@@ -265,9 +266,6 @@ function main() {
                                     await adapter.setStateChangedAsync(siteid + '.storageAbs', storageAbs, true);
                                 }
 
-                            } else {
-                                adapter.log.info('Response for site '+siteid+' has no ressource siteCurrentPowerFlow, ignoring');
-                            }
                         } else {
                             adapter.log.warn('Response has no valid content. Check your data and try again. ' + response.statusCode);
                         }
@@ -275,10 +273,10 @@ function main() {
                         adapter.log.warn(error);
                     }
                 });
-        adapter.log.info("SolarEdge Fully Done, stopping...");
     } // Ende Else
 
     //Adapter stopen
+    adapter.log.info("SolarEdge Adapter Ende, stopping...");
     adapter.stop();
 
 } // Ende  Main Function
