@@ -133,10 +133,10 @@ function main() {
                                             break;
                                         case "PV":
                                             switch (junction["to"]) {
-                                                case "Load":
+                                                case "LOAD":
                                                     // nothing to handle: LOADs currentPower already available through dedicated value
                                                     break;
-                                                case "Storage":
+                                                case "STORAGE":
                                                     storageIn = powerflow.STORAGE.currentPower;
                                                     storageAbs = powerflow.STORAGE.currentPower;
                                                     break;
@@ -263,18 +263,14 @@ function main() {
                                     await adapter.setStateChangedAsync(siteid + '.storageOut', storageOut, true);
                                     await adapter.setStateChangedAsync(siteid + '.storageAbs', storageAbs, true);
                                 }
-
-                                // wait for all await to finish before stopping the adapter
-                                await adapter.stopAsync();
-
                         } else {
                             adapter.log.warn('Response has no valid content. Check your data and try again. ' + response.statusCode);
-                            adapter.stop();
                         }
                     } else {
                         adapter.log.warn(error);
-                        adapter.stop();
                     }
+                    adapter.log.info("Stopping Adapter, stopping...");
+                    adapter.stop();
                 });
     } // Ende Else
 } // Ende  Main Function
