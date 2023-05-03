@@ -122,7 +122,7 @@ function main() {
                                 con.forEach(function (junction) {
                                     adapter.log.info(junction["from"].toString() + " -> " + junction["to"].toString());
                                     switch (junction["from"]) {
-                                        case "STORAGE":
+                                        case "Storage":
                                             // only LOAD is a valid target
                                             storageOut = powerflow.STORAGE.currentPower;
                                             storageAbs = -powerflow.STORAGE.currentPower;
@@ -137,7 +137,7 @@ function main() {
                                                 case "Load":
                                                     // nothing to handle: LOADs currentPower already available through dedicated value
                                                     break;
-                                                case "STORAGE":
+                                                case "Storage":
                                                     storageIn = powerflow.STORAGE.currentPower;
                                                     storageAbs = powerflow.STORAGE.currentPower;
                                                     break;
