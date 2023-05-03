@@ -106,7 +106,7 @@ function main() {
                                 var pv = powerflow.PV.currentPower;
 
                                 // get storage charge level only if storage exists
-                                if (powerflow.Storage) {
+                                if (powerflow.STORAGE) {
                                     var storageLevel = powerflow.STORAGE.chargeLevel;
                                 }
 
@@ -184,7 +184,7 @@ function main() {
                                         desc: 'current power in kW'
                                     });
         
-                                    if (powerflow.Storage) {
+                                    if (powerflow.STORAGE) {
                                         await adapter.createStateAsync('', siteid, 'storageLevel', {
                                             name: "storageLevel",
                                             type: 'number',
@@ -251,15 +251,16 @@ function main() {
 
                                     createStates = false;
                                 }
+                            
+                                // update states for PowerFlow
                                 adapter.log.debug("updating states");
 
-                                // update states for PowerFlow
                                 await adapter.setStateChangedAsync(siteid + '.load', load, true);
                                 await adapter.setStateChangedAsync(siteid + '.pv', pv, true);
                                 await adapter.setStateChangedAsync(siteid + '.gridIn', gridIn, true);
                                 await adapter.setStateChangedAsync(siteid + '.gridOut', gridOut, true);
                                 await adapter.setStateChangedAsync(siteid + '.gridAbs', gridAbs, true);
-                                if (powerflow.Storage) {
+                                if (powerflow.STORAGE) {
                                     await adapter.setStateChangedAsync(siteid + '.storageLevel', storageLevel, true);
                                     await adapter.setStateChangedAsync(siteid + '.storageIn', storageIn, true);
                                     await adapter.setStateChangedAsync(siteid + '.storageOut', storageOut, true);
